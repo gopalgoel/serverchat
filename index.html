@@ -27,15 +27,18 @@
                     if(value == currentRoom){
                         $('#rooms').append('<div>' + value + "(" + roomSizes[value] + ')' + '</div>');
                     }
-                    else {
+                    else{
                         $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + "(" + roomSizes[value] + ')' + '</a></div>');
                     }
                 });
+                if(privateRooms.length!=0){
+                    $('#rooms').append('<div>' + '<h4>Private Room:</h4>' + '</div>');
+                }
                 $.each(privateRooms, function(key, value) {
                     if(value == currentRoom){
                         $('#rooms').append('<div>' + value + "(" + roomSizes[value] + ')' + '</div>');
                     }
-                    else {
+                    else if(roomSizes[value]!=0){
                         $('#rooms').append('<div><a href="#" onclick="switchRoom(\''+value+'\')">' + value + "(" + roomSizes[value] + ')' + '</a></div>');
                     }
                 });
@@ -73,7 +76,7 @@
     </head>
     <body>
         <div style="float:left;width:200px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-            <h3>ROOMS</h3>
+            <h4>Public Rooms:</h4>
             <div id="rooms"></div>
             <hr>
             <div><a href="#" onClick="JoinPrivateRoom()">Join a private Room</a></div>
