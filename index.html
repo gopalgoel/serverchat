@@ -10,9 +10,7 @@
             var socket = io.connect();
             var privateRooms= [];
             socket.on('connect', function(){
-                var name = prompt("What's your name?");
-                while(name.length == 0) name = prompt("What's your name?");
-                socket.emit('adduser', name);
+                //do nothing for now
             });
 
             socket.on('updatechat', function (username, data) {
@@ -38,6 +36,13 @@
                     }
                 });
             });
+
+            function startChat(){
+                var name = $('#name').val();
+                socket.emit('adduser', name);
+                $('#name-input').hide();
+                $('#chat-interface').show();
+            }
 
             function switchRoom(room){
                 socket.emit('switchRoom', room);
@@ -68,16 +73,50 @@
         </script>
     </head>
     <body>
-        <div style="float:left;width:200px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
-            <h3>ROOMS</h3>
-            <div id="rooms"></div>
-            <hr>
-            <div><a href="#" onClick="JoinPrivateRoom()">Join a private Room</a></div>
+        <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Chat Application</a>
+            </div>
+          </div>
+        </nav>
+        <div id="name-input">
+            <div class="container text-center">
+                <div class="jumbotron">
+                    <h3>Enter your name:</h3>
+                    <input type="text" id="name">
+                    <input type="submit" onClick="startChat()" value="Join Chat room" class="btn btn-default">
+                </div>
+            </div>
         </div>
-        <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
-            <div id="conversation"></div>
-            <input id="data" style="width:200px;" />
-            <input type="button" id="datasend" value="send" />
+        <div id="chat-interface" style="display: none;">
+            <!-- <div style="float:left;width:200px;border-right:1px solid black;height:300px;padding:10px;overflow:scroll-y;">
+                <h3>ROOMS</h3>
+                <div id="rooms"></div>
+                <hr>
+                <div><a href="#" onClick="JoinPrivateRoom()">Join a private Room</a></div>
+            </div>
+            <div style="float:left;width:300px;height:250px;overflow:scroll-y;padding:10px;">
+                <div id="conversation"></div>
+                <input id="data" style="width:200px;" />
+                <input type="button" id="datasend" value="send" />
+            </div> -->
+            <div class="container-fluid">
+                <div class="row content">
+                    <div class="col-sm-3 sidenav">
+                        <h3>Rooms:</h3>
+                        <div id="rooms"></div>
+                        <hr>
+                        <div><a href="#" onClick="JoinPrivateRoom()">Join a private Room</a></div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div id="conversation"></div>
+                        <input id="data" style="width:200px;" />
+                        <input type="button" id="datasend" value="send" />
+                    </div>
+                </div>
+            </div>
+
         </div>
     </body>
 </html>
